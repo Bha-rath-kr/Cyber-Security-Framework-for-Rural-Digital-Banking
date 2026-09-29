@@ -1,0 +1,185 @@
+# ============================================================
+
+# GramBank - Complete Project .gitignore
+
+# ============================================================
+
+# ------------------------------------------------------------
+
+# Node.js dependencies
+
+# ------------------------------------------------------------
+
+node_modules/
+**/node_modules/
+
+# ------------------------------------------------------------
+
+# Environment files / secrets
+
+# ------------------------------------------------------------
+
+.env
+**/.env
+.env.local
+**/.env.local
+.env.development
+.env.production
+.env.test
+
+# Keep example environment files
+
+!.env.example
+!**/.env.example
+
+# ------------------------------------------------------------
+
+# React / Web build files
+
+# ------------------------------------------------------------
+
+dist/
+**/dist/
+build/
+**/build/
+
+# ------------------------------------------------------------
+
+# React Native / Expo
+
+# ------------------------------------------------------------
+
+.expo/
+**/.expo/
+.expo-shared/
+**/.expo-shared/
+
+# Expo generated files
+
+web-build/
+**/web-build/
+
+# ------------------------------------------------------------
+
+# Android generated/build files
+
+# ------------------------------------------------------------
+
+**/android/.gradle/
+**/android/app/build/
+**/android/build/
+**/android/.cxx/
+**/android/local.properties
+
+# Android signing/private files
+
+**/*.jks
+**/*.keystore
+**/debug.keystore
+
+# ------------------------------------------------------------
+
+# iOS generated/build files
+
+# ------------------------------------------------------------
+
+**/ios/Pods/
+**/ios/build/
+**/ios/DerivedData/
+**/*.xcworkspace/xcuserdata/
+**/*.xcodeproj/xcuserdata/
+
+# ------------------------------------------------------------
+
+# Fabric / Hyperledger private credentials
+
+# ------------------------------------------------------------
+
+# Private keys
+
+**/priv_sk
+**/*.key
+**/keystore/
+**/msp/keystore/
+
+# Generated Fabric MSP material
+
+**/msp/signcerts/
+**/msp/cacerts/
+**/msp/tlscacerts/
+**/msp/admincerts/
+
+# Fabric wallet
+
+GramBankAPI/fabric/wallet/
+**/fabric/wallet/
+
+# Fabric generated crypto material
+
+**/crypto-config/*/ca/
+**/crypto-config/*/tlsca/
+
+# ------------------------------------------------------------
+
+# Logs
+
+# ------------------------------------------------------------
+
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ------------------------------------------------------------
+
+# Coverage / testing
+
+# ------------------------------------------------------------
+
+coverage/
+.nyc_output/
+
+# ------------------------------------------------------------
+
+# Temporary files
+
+# ------------------------------------------------------------
+
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# ------------------------------------------------------------
+
+# Operating system files
+
+# ------------------------------------------------------------
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ------------------------------------------------------------
+
+# VS Code
+
+# ------------------------------------------------------------
+
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# ------------------------------------------------------------
+
+# Miscellaneous
+
+# ------------------------------------------------------------
+
+*.bak
+*.old
+*.orig
+*.rej
+npm-cache/
+yarn-cache/

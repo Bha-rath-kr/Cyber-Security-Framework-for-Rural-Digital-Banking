@@ -1,0 +1,71 @@
+{
+  "name": "grambank-network",
+  "version": "1.0.0",
+  "client": {
+    "organization": "GramBankMSP",
+    "connection": {
+      "timeout": {
+        "peer": {
+          "endorser": "300"
+        },
+        "orderer": "300"
+      }
+    }
+  },
+  "channels": {
+    "grambankchannel": {
+      "orderers": ["orderer.grambank.com"],
+      "peers": {
+        "peer0.grambank.com": {
+          "endorsingPeer": true,
+          "chaincodeQuery": true,
+          "ledgerQuery": true,
+          "eventSource": true
+        }
+      }
+    }
+  },
+  "organizations": {
+    "GramBankMSP": {
+      "mspid": "GramBankMSP",
+      "peers": ["peer0.grambank.com"],
+      "certificateAuthorities": ["ca.grambank.com"]
+    }
+  },
+  "orderers": {
+    "orderer.grambank.com": {
+      "url": "grpcs://localhost:7050",
+      "tlsCACerts": {
+        "path": "fabric/crypto-config/ordererOrganizations/grambank.com/orderers/orderer.grambank.com/tls/ca.crt"
+      },
+      "grpcOptions": {
+        "ssl-target-name-override": "orderer.grambank.com",
+        "hostnameOverride": "orderer.grambank.com"
+      }
+    }
+  },
+  "peers": {
+    "peer0.grambank.com": {
+      "url": "grpcs://localhost:7051",
+      "tlsCACerts": {
+        "path": "fabric/crypto-config/peerOrganizations/grambank.com/peers/peer0.grambank.com/tls/ca.crt"
+      },
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.grambank.com",
+        "hostnameOverride": "peer0.grambank.com"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca.grambank.com": {
+      "url": "https://localhost:7054",
+      "caName": "ca-grambank",
+      "tlsCACerts": {
+        "path": "fabric/crypto-config/peerOrganizations/grambank.com/ca/ca.grambank.com-cert.pem"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    }
+  }
+}

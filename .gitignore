@@ -1,185 +1,554 @@
 # ============================================================
-
-# GramBank - Complete Project .gitignore
-
+# GRAMBANK
+# Cyber Security Framework for Rural Digital Banking
+# Complete Project .gitignore
 # ============================================================
 
-# ------------------------------------------------------------
 
-# Node.js dependencies
-
-# ------------------------------------------------------------
+# ============================================================
+# NODE.JS / JAVASCRIPT DEPENDENCIES
+# ============================================================
 
 node_modules/
 **/node_modules/
 
-# ------------------------------------------------------------
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Environment files / secrets
+.npm/
+.yarn/
+.yarn-cache/
 
-# ------------------------------------------------------------
+
+# ============================================================
+# ENVIRONMENT FILES / SECRETS
+# ============================================================
 
 .env
+.env.*
 **/.env
-.env.local
-**/.env.local
-.env.development
-.env.production
-.env.test
+**/.env.*
 
 # Keep example environment files
-
 !.env.example
 !**/.env.example
 
-# ------------------------------------------------------------
+# Local secret directories
+secrets/
+**/secrets/
 
-# React / Web build files
+credentials/
+**/credentials/
 
-# ------------------------------------------------------------
+# Common credential files
+credentials.json
+**/credentials.json
 
-dist/
-**/dist/
+secrets.json
+**/secrets.json
+
+service-account.json
+**/service-account.json
+
+token.json
+**/token.json
+
+firebase-adminsdk*.json
+**/firebase-adminsdk*.json
+
+
+# ============================================================
+# REACT / WEB BUILD FILES
+# ============================================================
+
 build/
 **/build/
 
-# ------------------------------------------------------------
+dist/
+**/dist/
 
-# React Native / Expo
+out/
+**/out/
 
-# ------------------------------------------------------------
+.next/
+**/.next/
+
+.nuxt/
+**/.nuxt/
+
+.cache/
+**/.cache/
+
+.parcel-cache/
+**/.parcel-cache/
+
+.vite/
+**/.vite/
+
+*.tsbuildinfo
+
+
+# ============================================================
+# REACT NATIVE / EXPO
+# ============================================================
 
 .expo/
 **/.expo/
+
 .expo-shared/
 **/.expo-shared/
 
-# Expo generated files
+.expo-internal/
+**/.expo-internal/
 
 web-build/
 **/web-build/
 
-# ------------------------------------------------------------
+.metro-cache/
+**/.metro-cache/
 
-# Android generated/build files
+.metro-health-check*
+**/.metro-health-check*
 
-# ------------------------------------------------------------
+
+# ============================================================
+# ANDROID GENERATED FILES
+# ============================================================
 
 **/android/.gradle/
+**/android/.idea/
 **/android/app/build/
 **/android/build/
 **/android/.cxx/
-**/android/local.properties
+**/android/local.properties/
 
-# Android signing/private files
+**/android/captures/
+**/android/.settings/
+**/android/.project/
+**/android/.classpath/
 
+# Android packages
+*.apk
+*.aab
+
+# Android signing keys
+*.jks
+*.keystore
 **/*.jks
 **/*.keystore
-**/debug.keystore
 
-# ------------------------------------------------------------
+debug.keystore
+release.keystore
 
-# iOS generated/build files
 
-# ------------------------------------------------------------
+# ============================================================
+# IOS GENERATED FILES
+# ============================================================
 
 **/ios/Pods/
 **/ios/build/
 **/ios/DerivedData/
-**/*.xcworkspace/xcuserdata/
-**/*.xcodeproj/xcuserdata/
 
-# ------------------------------------------------------------
+**/ios/**/xcuserdata/
+**/ios/**/*.xcworkspace/xcuserdata/
+**/ios/**/*.xcodeproj/xcuserdata/
 
-# Fabric / Hyperledger private credentials
+*.ipa
 
-# ------------------------------------------------------------
 
-# Private keys
+# ============================================================
+# HYPERLEDGER FABRIC
+# PRIVATE KEYS / CREDENTIALS
+# ============================================================
 
+# Fabric private key
 **/priv_sk
+
+# Fabric private key variants
+**/*_sk
+
+# ALL private .key files
 **/*.key
-**/keystore/
+
+# Private key extensions
+**/*.priv
+**/*.pem.key
+
+# Fabric MSP private keystores
 **/msp/keystore/
+**/msp/*/keystore/
 
-# Generated Fabric MSP material
-
-**/msp/signcerts/
-**/msp/cacerts/
-**/msp/tlscacerts/
-**/msp/admincerts/
+# Generic keystore directories
+**/keystore/
 
 # Fabric wallet
-
-GramBankAPI/fabric/wallet/
 **/fabric/wallet/
+**/wallet/
 
-# Fabric generated crypto material
+# Fabric identity files
+**/fabric/wallet/*.id
+**/wallet/*.id
 
-**/crypto-config/*/ca/
-**/crypto-config/*/tlsca/
+# Fabric CA private material
+**/fabric-ca-server/
+**/fabric-ca-client/
 
-# ------------------------------------------------------------
+# ============================================================
+# FABRIC GENERATED CRYPTO MATERIAL
+# ============================================================
 
-# Logs
+# Private CA keys
+**/crypto-config/**/ca/priv_sk
 
-# ------------------------------------------------------------
+# Private TLS CA keys
+**/crypto-config/**/tlsca/priv_sk
+
+# Private MSP keys
+**/crypto-config/**/msp/keystore/
+
+# Private TLS keys
+**/crypto-config/**/tls/*.key
+
+# Explicit Fabric private key locations
+**/crypto-config/ordererOrganizations/**/ca/priv_sk
+**/crypto-config/ordererOrganizations/**/tlsca/priv_sk
+**/crypto-config/ordererOrganizations/**/msp/keystore/
+
+**/crypto-config/peerOrganizations/**/ca/priv_sk
+**/crypto-config/peerOrganizations/**/tlsca/priv_sk
+**/crypto-config/peerOrganizations/**/msp/keystore/
+
+
+# ============================================================
+# FABRIC GENERATED NETWORK / LEDGER DATA
+# ============================================================
+
+**/fabric-data/
+**/ledger-data/
+
+**/channel-artifacts/
+**/system-genesis-block/
+**/genesisblock/
+
+**/network/data/
+**/network/logs/
+
+**/production/
+
+# CouchDB
+**/couchdb/data/
+**/couchdb/*/data/
+
+# LevelDB
+**/leveldb/
+**/data/leveldb/
+
+
+# ============================================================
+# FABRIC CERTIFICATES
+# ============================================================
+
+# IMPORTANT:
+# Do NOT ignore all .pem or .crt files.
+#
+# Public Fabric certificates such as:
+#   ca-cert.pem
+#   server.crt
+#   client.crt
+#   tlsca-cert.pem
+#
+# may be required by the project.
+#
+# Private .key and priv_sk files are already ignored above.
+
+
+# ============================================================
+# DATABASE / LOCAL DATABASE FILES
+# ============================================================
+
+# SQLite
+*.db
+*.sqlite
+*.sqlite3
+
+*.db-journal
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm
+
+# MongoDB local data
+mongo-data/
+**/mongo-data/
+
+mongodb/
+**/mongodb/
+
+# Generic local database data
+database-data/
+**/database-data/
+
+
+# ============================================================
+# LOG FILES
+# ============================================================
 
 *.log
+
+logs/
+**/logs/
+
+debug.log
+error.log
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# ------------------------------------------------------------
 
-# Coverage / testing
+# ============================================================
+# PYTHON
+# ============================================================
 
-# ------------------------------------------------------------
+__pycache__/
+**/__pycache__/
+
+*.py[cod]
+*.pyo
+*.pyd
+
+.pytest_cache/
+**/.pytest_cache/
+
+.mypy_cache/
+**/.mypy_cache/
+
+.ruff_cache/
+**/.ruff_cache/
+
+venv/
+.venv/
+env/
+ENV/
+
+*.egg-info/
+
+
+# ============================================================
+# JUPYTER
+# ============================================================
+
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+
+# ============================================================
+# MACHINE LEARNING GENERATED MODELS
+# ============================================================
+
+*.h5
+*.hdf5
+*.keras
+
+*.pkl
+*.pickle
+*.joblib
+
+*.pt
+*.pth
+*.onnx
+
+# TensorFlow generated model directory
+saved_model/
+**/saved_model/
+
+
+# ============================================================
+# TESTING / COVERAGE
+# ============================================================
 
 coverage/
+**/coverage/
+
 .nyc_output/
+**/.nyc_output/
 
-# ------------------------------------------------------------
+test-results/
+**/test-results/
 
-# Temporary files
+.jest/
+**/.jest/
 
-# ------------------------------------------------------------
+
+# ============================================================
+# TEMPORARY FILES
+# ============================================================
 
 *.tmp
 *.temp
+
 *.swp
 *.swo
-
-# ------------------------------------------------------------
-
-# Operating system files
-
-# ------------------------------------------------------------
-
-.DS_Store
-Thumbs.db
-desktop.ini
-
-# ------------------------------------------------------------
-
-# VS Code
-
-# ------------------------------------------------------------
-
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-
-# ------------------------------------------------------------
-
-# Miscellaneous
-
-# ------------------------------------------------------------
 
 *.bak
 *.old
 *.orig
 *.rej
-npm-cache/
-yarn-cache/
+
+*.cache
+
+*.pid
+*.pid.lock
+
+*.seed
+
+
+# ============================================================
+# OPERATING SYSTEM FILES
+# ============================================================
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+.directory
+
+
+# ============================================================
+# VISUAL STUDIO CODE
+# ============================================================
+
+.vscode/*
+
+# Keep useful shared VS Code configuration
+!.vscode/extensions.json
+!.vscode/settings.json
+
+
+# ============================================================
+# JETBRAINS / INTELLIJ
+# ============================================================
+
+.idea/
+**/.idea/
+
+*.iml
+*.ipr
+*.iws
+
+
+# ============================================================
+# WINDOWS VISUAL STUDIO
+# ============================================================
+
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+
+# ============================================================
+# LOCAL UPLOADS
+# ============================================================
+
+uploads/
+**/uploads/
+
+generated/
+**/generated/
+
+temp/
+**/temp/
+
+
+# ============================================================
+# BACKUP FILES
+# ============================================================
+
+*.backup
+*.backup.*
+
+*.bak
+*.old
+*.orig
+
+
+# ============================================================
+# DOCKER LOCAL DATA
+# ============================================================
+
+docker-data/
+**/docker-data/
+
+docker-volumes/
+**/docker-volumes/
+
+
+# ============================================================
+# SSH / PRIVATE CREDENTIALS
+# ============================================================
+
+id_rsa
+id_rsa.pub
+
+id_ed25519
+id_ed25519.pub
+
+*.pem.key
+*.priv
+
+
+# ============================================================
+# DO NOT IGNORE THESE IMPORTANT PROJECT FILES
+# ============================================================
+#
+# The following are intentionally NOT ignored:
+#
+# package.json
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+#
+# README.md
+# BACKEND.md
+#
+# Dockerfile
+# docker-compose.yml
+# docker-compose.yaml
+#
+# *.js
+# *.jsx
+# *.ts
+# *.tsx
+# *.py
+# *.java
+# *.json
+# *.yaml
+# *.yml
+# *.html
+# *.css
+#
+# Hyperledger Fabric public certificates
+# Hyperledger Fabric configuration
+# Chaincode source
+# React source
+# React Native source
+# Android source/configuration
+#
+# ============================================================
+# END OF GRAMBANK .GITIGNORE
+# ============================================================

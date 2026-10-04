@@ -62,15 +62,15 @@ export function showFraudAlert(res, { onBlocked, onScheduled, onSuccess, onClose
 export function getReceiverBadge(receiverStatus) {
   switch (receiverStatus) {
     case "BLACKLISTED":
-      return { label: "BLACKLISTED", color: "#DC2626", bg: "#FEE2E2", icon: "🚫" };
+      return { label: "BLACKLISTED", color: "#DC2626", bg: "#FEE2E2", icon: "ban-outline" };
     case "TEMP_FROZEN":
-      return { label: "TEMP. FROZEN", color: "#D97706", bg: "#FEF3C7", icon: "🧊" };
+      return { label: "TEMP. FROZEN", color: "#D97706", bg: "#FEF3C7", icon: "snow-outline" };
     case "UNDER_REVIEW":
-      return { label: "UNDER REVIEW", color: "#9333EA", bg: "#F3E8FF", icon: "🔍" };
+      return { label: "UNDER REVIEW", color: "#9333EA", bg: "#F3E8FF", icon: "search-outline" };
     case "HIGH_RISK":
-      return { label: "HIGH RISK", color: "#EA580C", bg: "#FFF7ED", icon: "⚠️" };
+      return { label: "HIGH RISK", color: "#EA580C", bg: "#FFF7ED", icon: "warning-outline" };
     case "SAFE":
     default:
-      return { label: "SAFE", color: "#16A34A", bg: "#DCFCE7", icon: "✅" };
+      return { label: "SAFE", color: "#16A34A", bg: "#DCFCE7", icon: "checkmark-circle-outline" };
   }
 }

@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import { api_url } from "../config";
+import Ionicons from "../components/Icon";
 
 const ForgotPinScreen = ({ navigation }) => {
   const [aadhaar, setAadhaar] = useState("");
@@ -78,7 +79,7 @@ const ForgotPinScreen = ({ navigation }) => {
     <View style={styles.main}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.backArrow}>← Back</Text>
+          <Text style={styles.backArrow}><Ionicons name="arrow-back" size={16} color="#fff" /> Back</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Reset MPIN</Text>
       </View>
@@ -118,7 +119,7 @@ const ForgotPinScreen = ({ navigation }) => {
               {loading ? (
                 <ActivityIndicator color="#fff" />
               ) : (
-                <Text style={styles.primaryText}>Send OTP ➜</Text>
+                <Text style={styles.primaryText}>Send OTP <Ionicons name="arrow-forward" size={16} color="#fff" /></Text>
               )}
             </TouchableOpacity>
           </>
@@ -164,7 +165,7 @@ const ForgotPinScreen = ({ navigation }) => {
               {loading ? (
                 <ActivityIndicator color="#fff" />
               ) : (
-                <Text style={styles.primaryText}>Reset MPIN ➜</Text>
+                <Text style={styles.primaryText}>Reset MPIN <Ionicons name="arrow-forward" size={16} color="#fff" /></Text>
               )}
             </TouchableOpacity>
           </>

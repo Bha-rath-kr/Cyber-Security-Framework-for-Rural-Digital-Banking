@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { api_url } from "../config";
 import { formatINR } from "../utils/formatCurrency";
+import Ionicons from "../components/Icon";
 
 export default function CheckBalance({ navigation }) {
     const [aadhaar, setAadhaar] = useState("");
@@ -75,7 +76,7 @@ export default function CheckBalance({ navigation }) {
             {loading && !balance ? (
                 <View style={styles.loaderWrap}>
                     <View style={styles.loaderCircle}>
-                        <Text style={{ color: "#fff", fontSize: 26 }}>⏳</Text>
+                        <Ionicons name="hourglass-outline" size={26} color="#fff" />
                     </View>
 
                     <Text style={styles.loadingText}>Fetching Balance…</Text>
@@ -115,7 +116,7 @@ export default function CheckBalance({ navigation }) {
                         </TouchableOpacity>
 
                         <TouchableOpacity style={styles.key} onPress={onDelete}>
-                            <Text style={styles.keyText}>⌫</Text>
+                            <Ionicons name="backspace-outline" size={28} color="#fff" />
                         </TouchableOpacity>
                     </View>
                 </>
@@ -125,7 +126,7 @@ export default function CheckBalance({ navigation }) {
             {!loading && balance ? (
                 <>
                     <View style={styles.successCircle}>
-                        <Text style={styles.tick}>✔</Text>
+                        <Ionicons name="checkmark" size={60} color="#fff" />
                     </View>
 
                     <Text style={styles.successMsg}>
@@ -133,12 +134,7 @@ export default function CheckBalance({ navigation }) {
                     </Text>
 
                     <View style={styles.bankRow}>
-                        <Image
-                            source={{
-                                uri: "https://seeklogo.com/images/B/bank-icon-logo-4C0C47E624-seeklogo.com.png",
-                            }}
-                            style={styles.bankIcon}
-                        />
+                        <Ionicons name="business-outline" size={28} color="#fff" />
                         <Text style={styles.bankText}>
                             {bankName} - {last4}
                         </Text>
@@ -198,7 +194,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    tick: { color: "#fff", fontSize: 60 },
 
     successMsg: {
         color: "#fff",
@@ -248,8 +243,6 @@ const styles = StyleSheet.create({
         marginTop: 15,
         gap: 8
     },
-
-    bankIcon: { width: 32, height: 32 },
 
     bankText: { color: "#fff", fontSize: 16 },
 

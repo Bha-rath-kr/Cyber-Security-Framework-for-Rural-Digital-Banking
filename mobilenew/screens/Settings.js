@@ -12,6 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { api_url } from "../config";
 import { displayStatus } from "../utils/statusHelpers";
+import Ionicons from "../components/Icon";
 
 const Settings = ({ navigation }) => {
   const [user, setUser] = useState(null);
@@ -93,7 +94,7 @@ const Settings = ({ navigation }) => {
     <View style={styles.main}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.backArrow}>←</Text>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Settings</Text>
       </View>
@@ -158,7 +159,7 @@ const Settings = ({ navigation }) => {
 
         {/* SECURITY STATUS */}
         <View style={styles.securityCard}>
-          <Text style={styles.securityCardTitle}>🔒 Security Status</Text>
+          <Text style={styles.securityCardTitle}><Ionicons name="lock-closed-outline" size={16} color="#5E2CED" /> Security Status</Text>
           {restrictionLevel === "none" ? (
             <View style={styles.securityRow}>
               <Text style={styles.securityBadgeActive}>Active</Text>
@@ -190,11 +191,11 @@ const Settings = ({ navigation }) => {
         </View>
 
         <TouchableOpacity style={styles.infoCard} onPress={handleOpenTerms}>
-          <Text style={styles.infoCardText}>📜 Terms and Conditions</Text>
+          <Text style={styles.infoCardText}><Ionicons name="document-text-outline" size={18} color="#5E2CED" /> Terms and Conditions</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.infoCard} onPress={handleOpenPrivacy}>
-          <Text style={styles.infoCardText}>🔒 Privacy Policy</Text>
+          <Text style={styles.infoCardText}><Ionicons name="lock-closed-outline" size={18} color="#5E2CED" /> Privacy Policy</Text>
         </TouchableOpacity>
 
         <View style={styles.aboutSection}>
@@ -210,7 +211,7 @@ const Settings = ({ navigation }) => {
           style={styles.logoutButton}
           onPress={handleLogout}
         >
-          <Text style={styles.logoutText}>🚪 Logout</Text>
+          <Text style={styles.logoutText}><Ionicons name="log-out-outline" size={18} color="#D32F2F" /> Logout</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -229,7 +230,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
-  backArrow: { color: "#fff", fontSize: 26, marginRight: 10 },
   headerTitle: { color: "#fff", fontSize: 18, fontWeight: "bold" },
   scrollView: { flex: 1 },
   scrollContent: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 40 },

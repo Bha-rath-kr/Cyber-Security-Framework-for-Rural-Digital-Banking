@@ -11,6 +11,7 @@ import {
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { api_url } from "../config";
+import Ionicons from "../components/Icon";
 
 const FraudReport = ({ navigation }) => {
   const [account, setAccount] = useState("");
@@ -20,11 +21,11 @@ const FraudReport = ({ navigation }) => {
 
   const handleSubmit = async () => {
     if (!account) {
-      Alert.alert("⚠️ Missing Info", "Account number is required.");
+      Alert.alert("Missing Info", "Account number is required.");
       return;
     }
     if (!reason) {
-      Alert.alert("⚠️ Missing Info", "Please describe the issue.");
+      Alert.alert("Missing Info", "Please describe the issue.");
       return;
     }
 
@@ -44,14 +45,14 @@ const FraudReport = ({ navigation }) => {
       });
 
       console.log("[FRAUD REPORT] Response:", res.data);
-      Alert.alert("✅ Success", res.data.message || "Fraud report submitted.");
+      Alert.alert("Success", res.data.message || "Fraud report submitted.");
       setAccount("");
       setIfsc("");
       setReason("");
     } catch (err) {
       console.error("[FRAUD REPORT] Error:", err.response?.data, "Status:", err.response?.status);
       Alert.alert(
-        "❌ Error",
+        "Error",
         err.response?.data?.error || "Failed to submit fraud report."
       );
     } finally {
@@ -64,7 +65,7 @@ const FraudReport = ({ navigation }) => {
       {/* HEADER */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.backArrow}>←</Text>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Report Fraud</Text>
       </View>
@@ -72,7 +73,7 @@ const FraudReport = ({ navigation }) => {
       <ScrollView style={styles.container}>
         {/* ALERT BANNER */}
         <View style={styles.alertBox}>
-          <Text style={styles.alertTitle}>⚠️ Important</Text>
+          <Text style={styles.alertTitle}><Ionicons name="warning-outline" size={17} color="#A66300" /> Important</Text>
           <Text style={styles.alertText}>
             If you suspect unauthorized transactions, immediately report the
             account to help us secure your money.
@@ -141,7 +142,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 18,
   },
-  backArrow: { color: "#fff", fontSize: 26, marginRight: 10 },
   headerTitle: { color: "#fff", fontSize: 18, fontWeight: "bold" },
 
   container: {

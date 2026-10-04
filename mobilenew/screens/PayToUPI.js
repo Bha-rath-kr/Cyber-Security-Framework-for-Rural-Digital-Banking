@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
+import Ionicons from "../components/Icon";
 
 export default function PayToUPI({ navigation }) {
   const [upiId, setUpiId] = useState("");
@@ -34,7 +35,7 @@ export default function PayToUPI({ navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.back}>←</Text>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Pay to UPI ID</Text>
       </View>
@@ -72,7 +73,6 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: "#5e2ced",
   },
-  back: { color: "#fff", fontSize: 26, marginRight: 10 },
   headerTitle: { color: "#fff", fontSize: 18, fontWeight: "bold" },
   body: { padding: 20, flex: 1 },
   label: { fontSize: 16, fontWeight: "600", color: "#0F172A", marginBottom: 8 },

@@ -17,6 +17,7 @@ import { showFraudAlert } from "../utilitis/fraudUI";
 import { checkConnection } from "../utilitis/network";
 import { queueTransaction } from "../utilitis/offlineQueue";
 import { verifyMpin } from "../utilitis/verifyMpin";
+import Ionicons from "../components/Icon";
 
 const CONFIRM_FLAGS = {
   RECEIVER_UNDER_INVESTIGATION: 'receiverRiskConfirmed',
@@ -290,7 +291,7 @@ export default function UPIQRPay({ navigation }) {
             {/* HEADER LIKE PHONEPE */}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Text style={styles.backArrow}>←</Text>
+                    <Ionicons name="arrow-back" size={24} color="#fff" />
                 </TouchableOpacity>
 
                 <Text style={styles.headerTitle}>Scan any QR</Text>
@@ -318,14 +319,14 @@ export default function UPIQRPay({ navigation }) {
             {/* BOTTOM BAR */}
             <View style={styles.bottomBar}>
                 <TouchableOpacity style={styles.iconBtn}>
-                    <Text style={styles.iconText}>🖼</Text>
+                    <Ionicons name="image-outline" size={30} color="#fff" />
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     style={styles.iconBtn}
                     onPress={() => setTorch(!torch)}
                 >
-                    <Text style={styles.iconText}>{torch ? "⚡" : "💡"}</Text>
+                    <Ionicons name={torch ? "flash-outline" : "bulb-outline"} size={30} color="#fff" />
                 </TouchableOpacity>
             </View>
 
@@ -391,7 +392,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingHorizontal: 15,
     },
-    backArrow: { color: "#fff", fontSize: 26, marginRight: 10 },
     headerTitle: { color: "#fff", fontSize: 18, fontWeight: "bold" },
 
     overlay: {
@@ -426,7 +426,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    iconText: { fontSize: 30, color: "#fff" },
 
     modal: {
         flex: 1,

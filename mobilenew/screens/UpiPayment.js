@@ -15,6 +15,7 @@ import { api_url } from "../config";
 import { checkConnection } from "../utilitis/network";
 import { queueTransaction } from "../utilitis/offlineQueue";
 import { verifyMpin } from "../utilitis/verifyMpin";
+import Ionicons from "../components/Icon";
 import { formatINR } from "../utils/formatCurrency";
 import { getReceiverBadge } from "../utilitis/fraudUI";
 
@@ -334,7 +335,7 @@ export default function UPIPaymentScreen({ route, navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} disabled={loading}>
-          <Text style={styles.back}>←</Text>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Pay</Text>
       </View>
@@ -345,7 +346,7 @@ export default function UPIPaymentScreen({ route, navigation }) {
         {receiverBadge && (
           <View style={[styles.badge, { backgroundColor: receiverBadge.bg }]}>
             <Text style={[styles.badgeText, { color: receiverBadge.color }]}>
-              {receiverBadge.icon} {receiverBadge.label}
+              <Ionicons name={receiverBadge.icon} size={14} color={receiverBadge.color} /> {receiverBadge.label}
             </Text>
           </View>
         )}
@@ -443,7 +444,6 @@ export default function UPIPaymentScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#fff" },
   header: { flexDirection: "row", alignItems: "center", paddingTop: 45, padding: 15, backgroundColor: "#5e2ced" },
-  back: { color: "#fff", fontSize: 26, marginRight: 10 },
   headerTitle: { color: "#fff", fontSize: 18, fontWeight: "bold" },
   card: { margin: 20, padding: 20, borderRadius: 15, backgroundColor: "#f1e9ff" },
   name: { fontSize: 20, fontWeight: "bold" },

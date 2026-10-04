@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Animated } from 'react-native';
 import { checkConnection, subscribeToConnectionChanges } from './network';
 import { initOfflineQueue, setSyncCallback, processQueue } from './offlineQueue';
 import { checkPendingCount } from './offlineQueue';
+import Ionicons from '../components/Icon';
 
 const NetworkStatus = ({ pendingCount, syncing }) => {
   const [isConnected, setIsConnected] = useState(true);
@@ -68,17 +69,17 @@ const NetworkStatus = ({ pendingCount, syncing }) => {
     <Animated.View style={[styles.container, { opacity }]}>
       {!isConnected ? (
         <View style={styles.offline}>
-          <Text style={styles.icon}>📴</Text>
+          <Ionicons name="cloud-offline-outline" size={16} color="#fff" style={styles.icon} />
           <Text style={styles.text}>No Internet - Transactions will sync when online</Text>
         </View>
       ) : syncing ? (
         <View style={styles.syncing}>
-          <Text style={styles.icon}>🔄</Text>
+          <Ionicons name="sync-outline" size={16} color="#fff" style={styles.icon} />
           <Text style={styles.text}>Syncing {pendingCount} pending transaction(s)...</Text>
         </View>
       ) : pendingCount > 0 ? (
         <View style={styles.pending}>
-          <Text style={styles.icon}>⏳</Text>
+          <Ionicons name="hourglass-outline" size={16} color="#fff" style={styles.icon} />
           <Text style={styles.text}>{pendingCount} pending transaction(s) waiting to sync</Text>
         </View>
       ) : null}
@@ -114,7 +115,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    fontSize: 16,
     marginRight: 8,
   },
   text: {

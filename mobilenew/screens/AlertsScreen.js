@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, ActivityIndi
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { api_url } from "../config";
+import Ionicons from "../components/Icon";
 import { formatINR } from "../utils/formatCurrency";
 
 export default function AlertsScreen() {
@@ -78,7 +79,7 @@ export default function AlertsScreen() {
             >
               <View style={styles.row}>
                 <View style={styles.iconCircle}>
-                  <Text style={styles.iconText}>⚠️</Text>
+                  <Ionicons name="warning-outline" size={18} color="#F59E0B" />
                 </View>
 
                 <View style={{ flex: 1 }}>
@@ -137,9 +138,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginRight: 12
-  },
-  iconText: {
-    fontSize: 18,
   },
   title: {
     color: "#fff",

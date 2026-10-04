@@ -15,7 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { api_url } from "../config";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Ionicons from "../components/Icon";
 
 const ChatBotScreen = ({ navigation }) => {
   const [messages, setMessages] = useState([

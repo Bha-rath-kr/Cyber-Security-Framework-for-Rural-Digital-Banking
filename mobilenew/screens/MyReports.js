@@ -15,7 +15,7 @@ import { api_url } from "../config";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { formatINR } from "../utils/formatCurrency";
 import BottomToolbar from "./bottomToolBar";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Ionicons from "../components/Icon";
 
 const STATUS_CONFIG = {
   PENDING: { color: "#F59E0B", bg: "#FEF3C7", icon: "time-outline", label: "Pending" },

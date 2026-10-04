@@ -13,6 +13,7 @@ import * as Contacts from "expo-contacts";
 import { Platform } from "react-native";
 import axios from "axios";
 import { api_url } from "../config";
+import Ionicons from "../components/Icon";
 
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -262,7 +263,7 @@ export default function PayMobile({ navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.backArrow}>←</Text>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Select Contact</Text>
         <View style={{ width: 25 }} />
@@ -303,7 +304,7 @@ export default function PayMobile({ navigation }) {
                 <View style={styles.nameRow}>
                   <Text style={styles.name}>{item.name}</Text>
                   {item.isGramBankUser && item.status === "ACTIVE" && (
-                    <Text style={styles.verifiedBadge}>✓ GramBank</Text>
+                    <Text style={styles.verifiedBadge}><Ionicons name="checkmark-circle" size={12} color="#10B981" /> GramBank</Text>
                   )}
                   {item.status && item.status !== "ACTIVE" && (
                     <Text style={[styles.statusBadge, { color: STATUS_LABELS[item.status]?.color || "#EF4444", backgroundColor: (STATUS_LABELS[item.status]?.color || "#EF4444") + "22" }]}>
@@ -339,7 +340,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 18,
   },
-  backArrow: { color: "#fff", fontSize: 26, marginRight: 10 },
   headerTitle: { color: "#fff", fontSize: 18, fontWeight: "700", flex: 1 },
   search: {
     margin: 12,

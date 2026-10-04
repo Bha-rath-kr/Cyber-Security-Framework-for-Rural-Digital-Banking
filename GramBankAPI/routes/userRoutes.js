@@ -71,23 +71,56 @@ router.post("/verify-mpin", auth, async (req, res) => {
 
 router.post("/signup", async (req, res) => {
   try {
-    const { name, aadhaarNumber, panNumber, mpin, phone } = req.body;
+    const name = typeof req.body?.name === "string" ? req.body.name.trim() : "";
+    const aadhaarNumber = typeof req.body?.aadhaarNumber === "string" ? req.body.aadhaarNumber : "";
+    const panNumber = typeof req.body?.panNumber === "string" ? req.body.panNumber : "";
+    const mpin = typeof req.body?.mpin === "string" ? req.body.mpin : "";
+    const phone = typeof req.body?.phone === "string" ? req.body.phone : "";
 
-    if (!name || !aadhaarNumber || !panNumber || !mpin)
-      return res.status(400).json({ error: "All fields are required" });
+    if (!name || !aadhaarNumber || !panNumber || !mpin || !phone) {
+      return res.status(400).json({ success: false, error: "All fields are required" });
+    }
 
-    const aadhaarRegex = /^\d{12}$/;
-    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    if (/[^\d]/.test(aadhaarNumber)) {
+      return res.status(400).json({
+        success: false,
+        error: "Aadhaar number is not correct. Only numbers are allowed.",
+      });
+    }
 
-    if (!aadhaarRegex.test(aadhaarNumber))
-      return res.status(400).json({ error: "Invalid Aadhaar number" });
+    if (aadhaarNumber.length !== 12) {
+      return res.status(400).json({
+        success: false,
+        error: aadhaarNumber.length > 12
+          ? "Aadhaar number is not correct. It must contain exactly 12 digits."
+          : "Aadhaar number is not correct. It must contain 12 digits.",
+      });
+    }
 
-    if (!panRegex.test(panNumber))
-      return res.status(400).json({ error: "Invalid PAN number" });
+    if (!/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(panNumber)) {
+      return res.status(400).json({
+        success: false,
+        error: "PAN number is not correct. Please enter a valid PAN in the format ABCDE1234F.",
+      });
+    }
+
+    if (!/^[6-9]\d{9}$/.test(phone)) {
+      return res.status(400).json({ success: false, error: "Mobile number is not correct." });
+    }
+
+    if (!/^\d{4}$/.test(mpin)) {
+      return res.status(400).json({ success: false, error: "MPIN must contain exactly 4 digits." });
+    }
 
     const existingUser = await User.findOne({ aadhaarNumber });
-    if (existingUser)
-      return res.status(400).json({ error: "User already exists" });
+    if (existingUser) {
+      return res.status(400).json({ success: false, error: "Aadhaar number is already registered." });
+    }
+
+    const existingPhone = await User.findOne({ phoneNumber: phone });
+    if (existingPhone) {
+      return res.status(400).json({ success: false, error: "Mobile number is already registered." });
+    }
 
     const mpinHash = await bcrypt.hash(mpin, 10);
 
@@ -142,6 +175,16 @@ console.log("QR Image URL:", qrImageUrl);
     });
   } catch (error) {
     console.error("Signup Error:", error);
+    if (error.code === 11000) {
+      const duplicateField = Object.keys(error.keyPattern || {})[0];
+      const duplicateMessages = {
+        aadhaarNumber: "Aadhaar number is already registered.",
+        phoneNumber: "Mobile number is already registered.",
+      };
+      if (duplicateMessages[duplicateField]) {
+        return res.status(400).json({ success: false, error: duplicateMessages[duplicateField] });
+      }
+    }
     res.status(500).json({ error: error.message || "Server error" });
   }
 });
@@ -154,22 +197,39 @@ router.post("/login", async (req, res) => {
     console.log("═══════════════════════════════════════════════════════════════");
     console.log(`[PERF] Timestamp: ${new Date().toISOString()}`);
     
-    const aadhaarNumber = String(req.body?.aadhaarNumber || "").trim();
+    const aadhaarNumber = typeof req.body?.aadhaarNumber === "string"
+      ? req.body.aadhaarNumber
+      : "";
     const mpin = String(req.body?.mpin || "").trim();
 
-    console.log("Login attempt:", { aadhaarNumber, mpinLength: mpin?.length });
+    const maskedAadhaar = aadhaarNumber.length >= 4
+      ? `********${aadhaarNumber.slice(-4)}`
+      : "[invalid]";
+    console.log("Login attempt:", { aadhaar: maskedAadhaar, mpinLength: mpin.length });
 
-    if (!aadhaarNumber || !mpin)
+    if (!/^\d{12}$/.test(aadhaarNumber)) {
+      const message = /[^\d]/.test(aadhaarNumber)
+        ? "Aadhaar number is not correct. Only numbers are allowed."
+        : aadhaarNumber.length > 12
+          ? "Aadhaar number is not correct. It must contain exactly 12 digits."
+          : "Aadhaar number is not correct. It must contain 12 digits.";
+      return res.status(400).json({ success: false, error: message });
+    }
+
+    if (!mpin)
       return res.status(400).json({ error: "Aadhaar number and MPIN required" });
 
     const user = await User.findOne({ aadhaarNumber });
 
     if (!user) {
-      console.log("User not found for aadhaar:", aadhaarNumber);
-      return res.status(404).json({ error: "User not found" });
+      console.log("Login rejected: no account matches the supplied Aadhaar.");
+      return res.status(404).json({
+        success: false,
+        error: "Aadhaar number is not registered.",
+      });
     }
 
-    console.log("User found:", user.name, "mpinHash:", user.mpinHash?.substring(0, 10) + "...");
+    console.log("Login account found for Aadhaar:", maskedAadhaar);
 
     if (user.status === "FROZEN")
       return res.status(403).json({ error: "Account is frozen. Contact support." });

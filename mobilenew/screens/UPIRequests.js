@@ -15,7 +15,7 @@ import axios from "axios";
 import { api_url } from "../config";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BottomToolbar from "./bottomToolBar";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Ionicons from "../components/Icon";
 import { formatINR } from "../utils/formatCurrency";
 import { verifyMpin } from "../utilitis/verifyMpin";
 

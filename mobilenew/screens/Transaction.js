@@ -16,6 +16,7 @@ import Modal from "react-native-modal";
 import { api_url } from "../config";
 import { formatINR } from "../utils/formatCurrency";
 import { showFraudAlert } from "../utilitis/fraudUI";
+import Ionicons from "../components/Icon";
 
 const CONFIRM_FLAGS = {
   RECEIVER_UNDER_INVESTIGATION: "receiverRiskConfirmed",
@@ -556,7 +557,7 @@ const Transaction = ({ navigation }) => {
         <TouchableOpacity
           onPress={() => navigation.goBack()}
         >
-          <Text style={styles.backArrow}>←</Text>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
 
         <Text style={styles.headerTitle}>
@@ -616,7 +617,7 @@ const Transaction = ({ navigation }) => {
               <ActivityIndicator color="#fff" />
             ) : (
               <Text style={styles.sendButtonText}>
-                Proceed ➡️
+                Proceed <Ionicons name="arrow-forward" size={16} color="#fff" />
               </Text>
             )}
           </TouchableOpacity>
@@ -712,7 +713,7 @@ const Transaction = ({ navigation }) => {
             fraudData?.is_scheduled ? (
               <>
                 <Text style={styles.successTitle}>
-                  ⏳ Transaction Protected
+                  <Ionicons name="hourglass-outline" size={18} color="#D97706" /> Transaction Protected
                 </Text>
 
                 <Text style={styles.modalSub}>
@@ -764,7 +765,7 @@ const Transaction = ({ navigation }) => {
           ) : (
             <>
               <Text style={styles.failTitle}>
-                ⚠️ Fraud Detected
+                <Ionicons name="warning-outline" size={18} color="#DC2626" /> Fraud Detected
               </Text>
 
               <Text style={styles.modalSub}>
@@ -813,12 +814,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-  },
-
-  backArrow: {
-    color: "#fff",
-    fontSize: 26,
-    marginRight: 10,
   },
 
   headerTitle: {

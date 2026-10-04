@@ -5,7 +5,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import { api_url } from "../config";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Ionicons from "../components/Icon";
 import { formatINR } from "../utils/formatCurrency";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BottomToolbar from "./bottomToolBar";
@@ -233,16 +233,16 @@ const Dashboard = ({ navigation }) => {
 ========================================================= */
 
 const statusConfig = {
-  UNDER_INVESTIGATION: { bg: "#FEF3C7", border: "#F59E0B", icon: "🔍", label: "Under Investigation" },
-  UNDER_REVIEW: { bg: "#FEF3C7", border: "#F59E0B", icon: "👁", label: "Under Review" },
-  TEMP_FROZEN: { bg: "#FFEDD5", border: "#F97316", icon: "🧊", label: "Temporarily Frozen" },
-  FROZEN: { bg: "#FEE2E2", border: "#EF4444", icon: "🔒", label: "Frozen" },
-  SUSPENDED: { bg: "#FEE2E2", border: "#EF4444", icon: "🚫", label: "Suspended" },
-  BLOCKED: { bg: "#FEE2E2", border: "#DC2626", icon: "⛔", label: "Blocked" },
+  UNDER_INVESTIGATION: { bg: "#FEF3C7", border: "#F59E0B", icon: "search-outline", label: "Under Investigation" },
+  UNDER_REVIEW: { bg: "#FEF3C7", border: "#F59E0B", icon: "eye-outline", label: "Under Review" },
+  TEMP_FROZEN: { bg: "#FFEDD5", border: "#F97316", icon: "snow-outline", label: "Temporarily Frozen" },
+  FROZEN: { bg: "#FEE2E2", border: "#EF4444", icon: "lock-closed-outline", label: "Frozen" },
+  SUSPENDED: { bg: "#FEE2E2", border: "#EF4444", icon: "remove-circle-outline", label: "Suspended" },
+  BLOCKED: { bg: "#FEE2E2", border: "#DC2626", icon: "ban-outline", label: "Blocked" },
 };
 
 const SecurityStatusCard = ({ status, reason, level, navigation }) => {
-  const config = statusConfig[status] || { bg: "#FEE2E2", border: "#EF4444", icon: "⚠️", label: status };
+  const config = statusConfig[status] || { bg: "#FEE2E2", border: "#EF4444", icon: "warning-outline", label: status };
   const isActive = level === "none";
 
   if (isActive) return null;
@@ -250,7 +250,7 @@ const SecurityStatusCard = ({ status, reason, level, navigation }) => {
   return (
     <View style={[ui.statusCard, { backgroundColor: config.bg, borderLeftColor: config.border }]}>
       <View style={ui.statusHeader}>
-        <Text style={ui.statusIcon}>{config.icon}</Text>
+        <Ionicons name={config.icon} size={22} color={config.border} style={ui.statusIcon} />
         <View style={ui.statusInfo}>
           <Text style={[ui.statusLabel, { color: config.border }]}>{config.label}</Text>
           <Text style={ui.statusReason}>{reason}</Text>
@@ -347,7 +347,6 @@ const ui = StyleSheet.create({
     alignItems: "flex-start",
   },
   statusIcon: {
-    fontSize: 22,
     marginRight: 10,
     marginTop: 2,
   },

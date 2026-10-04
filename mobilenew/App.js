@@ -2,6 +2,8 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "react-native";
+import { useFonts } from "expo-font";
+import { iconFont } from "./components/Icon";
 import SplashScreen from "./screens/SplashScreen";
 import SignupStep1 from "./screens/SignupStep1";
 import SignupStep2 from "./screens/SignupStep2";
@@ -33,9 +35,14 @@ import { initOfflineQueue } from "./utilitis/offlineQueue";
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [fontsLoaded, fontError] = useFonts(iconFont);
+
   React.useEffect(() => {
     initOfflineQueue();
   }, []);
+
+  if (fontError) throw fontError;
+  if (!fontsLoaded) return null;
 
   return (
     <NavigationContainer>

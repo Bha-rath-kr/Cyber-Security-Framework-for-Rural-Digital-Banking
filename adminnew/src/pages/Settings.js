@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Check } from "lucide-react";
 
 export default function Settings() {
   const [name, setName] = useState("");
@@ -71,7 +72,7 @@ export default function Settings() {
           onClick={handleSave}
           className="mt-6 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
         >
-          {saved ? "Saved ✓" : "Save Changes"}
+          {saved ? <><Check size={16} aria-hidden="true" /> Saved</> : "Save Changes"}
         </button>
       </div>
 

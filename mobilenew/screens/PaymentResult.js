@@ -1,23 +1,24 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { formatINR } from "../utils/formatCurrency";
+import Ionicons from "../components/Icon";
 
 const RESULT_STATES = {
   success: {
     title: "Payment Successful",
-    icon: "✓",
+    icon: "checkmark-circle",
     color: "#16A34A",
     description: "Your payment has been processed.",
   },
   scheduled: {
     title: "Payment Protected",
-    icon: "!",
+    icon: "warning-outline",
     color: "#D97706",
     description: "This payment is held for security review and is not completed yet.",
   },
   offline: {
     title: "Saved Offline",
-    icon: "…",
+    icon: "time-outline",
     color: "#2563EB",
     description: "This payment has not been completed. It is waiting to retry when the network is available.",
   },
@@ -45,7 +46,7 @@ export default function PaymentResult({ route, navigation }) {
   return (
     <View style={styles.container}>
       <View style={[styles.iconCircle, { backgroundColor: `${result.color}18` }]}>
-        <Text style={[styles.icon, { color: result.color }]}>{result.icon}</Text>
+        <Ionicons name={result.icon} size={40} color={result.color} />
       </View>
       <Text style={styles.title}>{result.title}</Text>
       <Text style={styles.description}>{description}</Text>
@@ -79,7 +80,6 @@ function Detail({ label, value }) {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#F8FAFC", alignItems: "center", justifyContent: "center", padding: 24 },
   iconCircle: { width: 76, height: 76, borderRadius: 38, alignItems: "center", justifyContent: "center", marginBottom: 18 },
-  icon: { fontSize: 40, fontWeight: "700" },
   title: { color: "#0F172A", fontSize: 25, fontWeight: "700", textAlign: "center" },
   description: { color: "#64748B", fontSize: 15, lineHeight: 22, textAlign: "center", marginTop: 8, maxWidth: 440 },
   details: { width: "100%", maxWidth: 480, backgroundColor: "#fff", borderRadius: 16, paddingHorizontal: 18, marginTop: 28, borderWidth: 1, borderColor: "#E2E8F0" },

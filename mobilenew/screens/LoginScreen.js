@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as LocalAuthentication from "expo-local-authentication";
 import { api_url } from "../config";
+import Ionicons from "../components/Icon";
 
 const isTokenValid = async (token) => {
   try {
@@ -30,8 +31,28 @@ const isTokenValid = async (token) => {
 
 const LoginScreen = ({ navigation }) => {
   const [pin, setPin] = useState("");
+  const [mpinError, setMpinError] = useState("");
   const [aadhaar, setAadhaar] = useState("");
+  const [aadhaarMessage, setAadhaarMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const invalidAadhaarInput = useRef(false);
+  const invalidAadhaarMessage = useRef("");
+
+  const getAadhaarMessage = (value) => {
+    if (!value) return "";
+    if (/[^\d]/.test(value)) return "Aadhaar number is not correct. Only numbers are allowed.";
+    if (value.length > 12) return "Aadhaar number is not correct. It must contain exactly 12 digits.";
+    if (!/^\d{12}$/.test(value)) return "Aadhaar number is not correct. It must contain 12 digits.";
+    return "Aadhaar number format is valid.";
+  };
+
+  const validateAadhaar = () => {
+    const message = invalidAadhaarInput.current
+      ? invalidAadhaarMessage.current
+      : getAadhaarMessage(aadhaar);
+    setAadhaarMessage(message);
+    return message === "Aadhaar number format is valid.";
+  };
 
   useEffect(() => {
   const initLogin = async () => {
@@ -72,7 +93,12 @@ const LoginScreen = ({ navigation }) => {
 
 
   const handlePinLogin = async () => {
-    if (!aadhaar || !pin) return Alert.alert("Error", "Enter Aadhaar & MPIN");
+    if (!validateAadhaar()) return;
+    setMpinError("");
+    if (!/^\d{4}$/.test(pin)) {
+      setMpinError("MPIN must contain 4 digits.");
+      return;
+    }
 
     setLoading(true);
     try {
@@ -93,6 +119,10 @@ const LoginScreen = ({ navigation }) => {
     } catch (err) {
       console.log("Login error:", err.response?.data);
       console.log("Login error status:", err.response?.status);
+      if (err.response?.status === 401 && err.response?.data?.error === "Invalid MPIN") {
+        setMpinError("Wrong MPIN. Please try again.");
+        return;
+      }
       Alert.alert(
         "Login Failed",
         err.response?.data?.error || "Network error. Check your connection."
@@ -157,12 +187,34 @@ const LoginScreen = ({ navigation }) => {
           style={styles.input}
           placeholder="Aadhaar Number"
           keyboardType="numeric"
-          maxLength={12}
           value={aadhaar}
-          onChangeText={setAadhaar}
+          onChangeText={(value) => {
+            const message = getAadhaarMessage(value);
+            invalidAadhaarInput.current = /[^\d]/.test(value) || value.length > 12;
+            invalidAadhaarMessage.current = invalidAadhaarInput.current ? message : "";
+            setAadhaar(value.replace(/[^\d]/g, "").slice(0, 12));
+            setAadhaarMessage(message);
+          }}
+          onBlur={() => setAadhaarMessage(
+            invalidAadhaarInput.current
+              ? invalidAadhaarMessage.current
+              : getAadhaarMessage(aadhaar)
+          )}
           placeholderTextColor="#777"
           editable={!loading}
         />
+        {aadhaarMessage ? (
+          <Text style={[
+            styles.validationMessage,
+            aadhaarMessage === "Aadhaar number format is valid." ? styles.validMessage : styles.errorMessage,
+          ]}>
+            <Ionicons
+              name={aadhaarMessage === "Aadhaar number format is valid." ? "checkmark-circle-outline" : "close-circle-outline"}
+              size={14}
+              color={aadhaarMessage === "Aadhaar number format is valid." ? "#15803D" : "#DC2626"}
+            />{" "}{aadhaarMessage}
+          </Text>
+        ) : null}
 
         <TextInput
           style={styles.input}
@@ -171,10 +223,18 @@ const LoginScreen = ({ navigation }) => {
           secureTextEntry
           maxLength={4}
           value={pin}
-          onChangeText={setPin}
+          onChangeText={(value) => {
+            setPin(value.replace(/[^\d]/g, "").slice(0, 4));
+            setMpinError("");
+          }}
           placeholderTextColor="#777"
           editable={!loading}
         />
+        {mpinError ? (
+          <Text style={[styles.validationMessage, styles.errorMessage]}>
+            <Ionicons name="close-circle-outline" size={14} color="#DC2626" />{" "}{mpinError}
+          </Text>
+        ) : null}
 
         <TouchableOpacity
           style={[styles.loginBtn, loading && styles.disabledBtn]}
@@ -184,7 +244,7 @@ const LoginScreen = ({ navigation }) => {
           {loading ? (
             <ActivityIndicator color="#fff" />
           ) : (
-            <Text style={styles.loginText}>Login ➜</Text>
+            <Text style={styles.loginText}>Login <Ionicons name="arrow-forward" size={17} color="#fff" /></Text>
           )}
         </TouchableOpacity>
 
@@ -195,12 +255,7 @@ const LoginScreen = ({ navigation }) => {
           onPress={handleBiometricAuth}
           disabled={loading}
         >
-          <Image
-            source={{
-              uri: "https://cdn-icons-png.flaticon.com/512/10074/10074023.png",
-            }}
-            style={styles.fingerprintIcon}
-          />
+          <Ionicons name="finger-print-outline" size={22} color="#5e2ced" style={styles.fingerprintIcon} />
           <Text style={styles.fpText}>Login with Fingerprint</Text>
         </TouchableOpacity>
 
@@ -209,7 +264,7 @@ const LoginScreen = ({ navigation }) => {
           disabled={loading}
         >
           <Text style={styles.forgotText}>
-            🔑 Forgot MPIN?
+            <><Ionicons name="key-outline" size={15} color="#b80000" /> Forgot MPIN?</>
           </Text>
         </TouchableOpacity>
 
@@ -218,7 +273,7 @@ const LoginScreen = ({ navigation }) => {
           disabled={loading}
         >
           <Text style={styles.signupText}>
-            📝 New user? Create Account
+            <><Ionicons name="person-add-outline" size={15} color="#5e2ced" /> New user? Create Account</>
           </Text>
         </TouchableOpacity>
       </View>
@@ -288,6 +343,14 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#000",
   },
+  validationMessage: {
+    fontSize: 13,
+    marginTop: -7,
+    marginBottom: 12,
+    textAlign: "center",
+  },
+  errorMessage: { color: "#DC2626" },
+  validMessage: { color: "#15803D" },
 
   loginBtn: {
     backgroundColor: "#5e2ced",

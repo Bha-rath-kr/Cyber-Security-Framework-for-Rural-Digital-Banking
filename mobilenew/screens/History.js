@@ -16,6 +16,7 @@ import BottomToolbar from "./bottomToolBar";
 import { getUnsyncedTransactions } from "../utilitis/database";
 import { checkConnection } from "../utilitis/network";
 import { formatINR } from "../utils/formatCurrency";
+import Ionicons from "../components/Icon";
 
 const History = ({ navigation }) => {
   const [txns, setTxns] = useState([]);
@@ -236,7 +237,7 @@ const History = ({ navigation }) => {
       {/* HEADER */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text style={styles.backArrow}>←</Text>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Transaction History</Text>
       </View>
@@ -275,7 +276,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 18,
   },
-  backArrow: { color: "#fff", fontSize: 26, marginRight: 10 },
   headerTitle: { color: "#fff", fontSize: 18, fontWeight: "bold" },
 
   container: {

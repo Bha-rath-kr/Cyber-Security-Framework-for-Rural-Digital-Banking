@@ -8,7 +8,7 @@ import {
   Linking,
   Alert,
 } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Ionicons from "../components/Icon";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BottomToolbar from "./bottomToolBar";
 
